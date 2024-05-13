@@ -42,16 +42,21 @@ public class Decimal {
 
     public void decimalToOctal(int decimalNumber, ArrayList<Integer> octalList, ArrayList<String> pasosDecimalToOctal ) {
         if (decimalNumber == 0) {
+
             octalList.add(0);
-//            divicionList.add(decimalNumber);
+            valor.append(0);
+            pasosDecimalToOctal.add("El número decimal es 0, por lo tanto, el octal también es 0.");
         } else {
             while (decimalNumber != 0) {
                 int remainder = decimalNumber % 8;
                 int quotient = decimalNumber / 8;
-                double resideo = (double) decimalNumber / 8;
+
                 octalList.add(remainder);
-//                resideoList.add(resideo);
-//                divicionList.add(decimalNumber);
+                valor.append(remainder);
+
+                double resideo = (double) decimalNumber / 8;
+                pasosDecimalToOctal.add("Dividimos " + decimalNumber + "/8 \nSi nuestro resultado no es un número entero, agregamos un residuo \nen otro caso, será cero \nEn este caso tenemos " + resideo + ", por lo tanto, el residuo es " + remainder + "\nStack de valores: " + valor.toString());
+
                 decimalNumber = quotient;
             }
         }

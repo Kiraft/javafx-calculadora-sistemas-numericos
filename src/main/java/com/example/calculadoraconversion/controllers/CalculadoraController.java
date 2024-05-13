@@ -78,7 +78,7 @@ public class CalculadoraController implements Initializable {
                 if(boxConversion.getSelectionModel().getSelectedItem().equals("Binario")){
 
                     ArrayList<String> pasosDecimalToBinary = new ArrayList<>();
-                    decimalToBinario(pasosDecimalToBinary);
+                    decimalToBinary(pasosDecimalToBinary);
 
                     for (String value : pasosDecimalToBinary) {
                         Text paso = new Text(value);
@@ -86,7 +86,13 @@ public class CalculadoraController implements Initializable {
                     }
 
                 } else if(boxConversion.getSelectionModel().getSelectedItem().equals("Octal")){
+                    ArrayList<String> pasosDecimalToOctal = new ArrayList<>();
+                    decimalToOctal(pasosDecimalToOctal);
 
+                    for (String value : pasosDecimalToOctal) {
+                        Text paso = new Text(value);
+                        pasosContainer.getChildren().add(paso);
+                    }
                 }
             }
 
@@ -100,11 +106,43 @@ public class CalculadoraController implements Initializable {
         }
     }
 
+    private void decimalToOctal(ArrayList<String> pasosDecimalToOctal) {
+
+        ArrayList<Integer> resultadosOctalList = new ArrayList<>();
+        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList, pasosDecimalToOctal);
+        StringBuilder stringBuilderOctal = new StringBuilder();
+        for (int value : resultadosOctalList) {
+            stringBuilderOctal.append(value);
+        }
+        labelValueOctal.setText(stringBuilderOctal.toString());
 
 
-    private void decimalToBinario(ArrayList<String> pasosBinarytoDecimal) {
+        ArrayList<String> pasosDecimalToBinary = new ArrayList<>();
         ArrayList<Integer> resultadosBinaryList = new ArrayList<>();
-        calculadoraDecimal.decimalToBinary(Integer.parseInt(txtDato.getText()), resultadosBinaryList, pasosBinarytoDecimal);
+        calculadoraDecimal.decimalToBinary(Integer.parseInt(txtDato.getText()), resultadosBinaryList, pasosDecimalToBinary);
+        StringBuilder stringBuilderBinary = new StringBuilder();
+        for (int value : resultadosBinaryList) {
+            stringBuilderBinary.append(value);
+        }
+        labelValueBin.setText(stringBuilderBinary.reverse().toString());
+
+
+        ArrayList<String> pasosDecimalToHex = new ArrayList<>();
+        ArrayList<String> resultadosHexList = new ArrayList<>();
+        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList,  pasosDecimalToHex);
+        StringBuilder stringBuilderHex = new StringBuilder();
+        for (String value : resultadosHexList) {
+            stringBuilderHex.append(value);
+        }
+        labelValueHex.setText(stringBuilderHex.reverse().toString());
+
+
+        labelValueDec.setText(txtDato.getText());
+    }
+
+    private void decimalToBinary(ArrayList<String> pasosDecimalToBinary) {
+        ArrayList<Integer> resultadosBinaryList = new ArrayList<>();
+        calculadoraDecimal.decimalToBinary(Integer.parseInt(txtDato.getText()), resultadosBinaryList, pasosDecimalToBinary);
         StringBuilder stringBuilderBinary = new StringBuilder();
         for (int value : resultadosBinaryList) {
             stringBuilderBinary.append(value);
