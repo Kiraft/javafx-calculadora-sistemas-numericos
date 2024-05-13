@@ -13,6 +13,7 @@
    <children>
       <TextField fx:id="txtDato" layoutX="32.0" layoutY="45.0" prefHeight="44.0" prefWidth="432.0" />
       <ComboBox fx:id="boxConversion" layoutX="499.0" layoutY="140.0" onAction="#convertValue" prefHeight="44.0" prefWidth="260.0" promptText="Selecciona" />
+      <ComboBox fx:id="boxBase" layoutX="499.0" layoutY="45.0" onAction="#baseAction" prefHeight="44.0" prefWidth="260.0" promptText="Selecciona" />
       <Label layoutX="32.0" layoutY="14.0" text="Dato" textFill="WHITE">
          <font>
             <Font name="System Bold" size="21.0" />
@@ -26,11 +27,6 @@
       <Label layoutX="499.0" layoutY="109.0" text="Conversion" textFill="WHITE">
          <font>
             <Font name="System Bold" size="21.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="32.0" layoutY="213.0" prefHeight="44.0" prefWidth="338.0" style="-fx-background-color: #4A1B6A; -fx-border-color: #FFFFFF;" text="Binario" textFill="WHITE" visible="false">
-         <font>
-            <Font size="24.0" />
          </font>
       </Label>
       <VBox alignment="CENTER_LEFT" layoutX="499.0" layoutY="213.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
@@ -84,7 +80,6 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <ComboBox fx:id="boxBase" layoutX="499.0" layoutY="45.0" prefHeight="44.0" prefWidth="260.0" promptText="Selecciona" />
       <VBox alignment="CENTER_LEFT" layoutX="499.0" layoutY="481.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
          <children>
             <Label alignment="CENTER" text="Bin" textFill="WHITE">

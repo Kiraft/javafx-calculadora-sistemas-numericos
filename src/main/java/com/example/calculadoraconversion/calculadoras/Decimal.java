@@ -40,27 +40,27 @@ public class Decimal {
         }
     }
 
-    public void decimalToOctal(int decimalNumber, ArrayList<Integer> octalList, ArrayList<Double> resideoList, ArrayList<Integer> divicionList, ArrayList<String> pasosDecimalToOctal ) {
+    public void decimalToOctal(int decimalNumber, ArrayList<Integer> octalList, ArrayList<String> pasosDecimalToOctal ) {
         if (decimalNumber == 0) {
             octalList.add(0);
-            divicionList.add(decimalNumber);
+//            divicionList.add(decimalNumber);
         } else {
             while (decimalNumber != 0) {
                 int remainder = decimalNumber % 8;
                 int quotient = decimalNumber / 8;
                 double resideo = (double) decimalNumber / 8;
                 octalList.add(remainder);
-                resideoList.add(resideo);
-                divicionList.add(decimalNumber);
+//                resideoList.add(resideo);
+//                divicionList.add(decimalNumber);
                 decimalNumber = quotient;
             }
         }
     }
 
-    public void decimalToHexadecimal(int decimalNumber, ArrayList<String> hexadecimalList, ArrayList<Double> resideoList, ArrayList<Integer> divicionList, ArrayList<String> pasosDecimalToHex) {
+    public void decimalToHexadecimal(int decimalNumber, ArrayList<String> hexadecimalList,  ArrayList<String> pasosDecimalToHex) {
         if (decimalNumber == 0) {
             hexadecimalList.add("0");
-            divicionList.add(decimalNumber);
+//            divicionList.add(decimalNumber);
         } else {
             while (decimalNumber != 0) {
                 int remainder = decimalNumber % 16;
@@ -71,8 +71,8 @@ public class Decimal {
                 String hexChar = (remainder < 10) ? String.valueOf(remainder) : Character.toString((char) ('A' + remainder - 10));
 
                 hexadecimalList.add(hexChar);
-                resideoList.add(resideo);
-                divicionList.add(decimalNumber);
+//                resideoList.add(resideo);
+//                divicionList.add(decimalNumber);
                 decimalNumber = quotient;
             }
         }

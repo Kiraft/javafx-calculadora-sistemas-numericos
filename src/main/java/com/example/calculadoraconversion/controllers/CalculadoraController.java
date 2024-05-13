@@ -47,6 +47,27 @@ public class CalculadoraController implements Initializable {
     // INYECCION DE DEPENDENCIAS
     Decimal calculadoraDecimal = new Decimal();
 
+    @FXML
+    void baseAction(ActionEvent event) {
+        if(boxBase.getSelectionModel().getSelectedItem().equals("10")){
+            boxConversion.getItems().clear();
+            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Octal", "Hexadecimal")));
+            boxConversion.setItems(observableListConvertir);
+        }else if (boxBase.getSelectionModel().getSelectedItem().equals("8")){
+            boxConversion.getItems().clear();
+            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Decimal", "Hexadecimal")));
+            boxConversion.setItems(observableListConvertir);
+        }else if (boxBase.getSelectionModel().getSelectedItem().equals("16")){
+            boxConversion.getItems().clear();
+            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Octal", "Decimal")));
+            boxConversion.setItems(observableListConvertir);
+        }else if (boxBase.getSelectionModel().getSelectedItem().equals("2")){
+            boxConversion.getItems().clear();
+            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Decimal", "Octal", "Hexadecimal")));
+            boxConversion.setItems(observableListConvertir);
+        }
+    }
+
 
     @FXML
     void convertValue(ActionEvent event) {
@@ -91,11 +112,9 @@ public class CalculadoraController implements Initializable {
         labelValueBin.setText(stringBuilderBinary.reverse().toString());
 
 
+        ArrayList<String> pasosOctaltoDecimal = new ArrayList<>();
         ArrayList<Integer> resultadosOctalList = new ArrayList<>();
-        ArrayList<Double> resideoOctalList = new ArrayList<>();
-        ArrayList<Integer> divicionOctalList = new ArrayList<>();
-
-        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList, resideoOctalList, divicionOctalList, pasosBinarytoDecimal);
+        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList, pasosOctaltoDecimal);
         StringBuilder stringBuilderOctal = new StringBuilder();
         for (int value : resultadosOctalList) {
             stringBuilderOctal.append(value);
@@ -103,17 +122,16 @@ public class CalculadoraController implements Initializable {
         labelValueOctal.setText(stringBuilderOctal.toString());
 
 
+        ArrayList<String> pasosHextoDecimal = new ArrayList<>();
         ArrayList<String> resultadosHexList = new ArrayList<>();
-        ArrayList<Double> resideoHexList = new ArrayList<>();
-        ArrayList<Integer> divicionHexList = new ArrayList<>();
-
-        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList, resideoHexList, divicionHexList, pasosBinarytoDecimal);
+        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList,  pasosHextoDecimal);
         StringBuilder stringBuilderHex = new StringBuilder();
-
         for (String value : resultadosHexList) {
             stringBuilderHex.append(value);
         }
         labelValueHex.setText(stringBuilderHex.reverse().toString());
+
+
         labelValueDec.setText(txtDato.getText());
     }
 
