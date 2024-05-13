@@ -9,5 +9,5 @@ module com.example.calculadoraconversion {
     exports com.example.calculadoraconversion.controllers;
     opens com.example.calculadoraconversion.controllers to javafx.fxml;
 
-    opens com.example.calculadoraconversion.rowsModels to javafx.base;
+//    opens com.example.calculadoraconversion.rowsModels to javafx.base;
 }

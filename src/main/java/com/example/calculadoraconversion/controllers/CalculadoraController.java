@@ -1,27 +1,20 @@
 package com.example.calculadoraconversion.controllers;
 
-import com.example.calculadoraconversion.rowsModels.BinaryRow;
-import com.example.calculadoraconversion.rowsModels.HexRow;
-import com.example.calculadoraconversion.rowsModels.OctalRow;
-import com.example.calculadoraconversion.utils.CheckType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.example.calculadoraconversion.calculadoras.Decimal;
 
 import javafx.application.Platform;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 
 public class CalculadoraController implements Initializable {
@@ -30,130 +23,112 @@ public class CalculadoraController implements Initializable {
     private ComboBox<?> boxConversion;
 
     @FXML
-    private Button btnConvertir;
-
-    @FXML
-    private TableColumn<BinaryRow, String> columnResultado;
-
-    @FXML
-    private TableColumn<BinaryRow, String> columnaDivision;
-
-    @FXML
-    private TableColumn<BinaryRow, Double> columnaResideo;
-
-    @FXML
-    private TableView<BinaryRow> tableBinary;
-
-    @FXML
-    private TableColumn<OctalRow, String> columnResultadoOctal;
-
-    @FXML
-    private TableColumn<OctalRow, String> columnaDivisionOctal;
-
-    @FXML
-    private TableColumn<OctalRow, String> columnaResideoOctal;
-
-    @FXML
-    private TableView<OctalRow> tableOctal;
-
-    @FXML
-    private TableColumn<HexRow, String> columnResultadoHex;
-
-    @FXML
-    private TableColumn<HexRow, String> columnaDivisionHex;
-
-    @FXML
-    private TableColumn<HexRow, String> columnaResideoHex;
-
-    @FXML
-    private TableView<HexRow> tableHex;
-
-    @FXML
-    private Label labelBase;
+    private ComboBox<?> boxBase;
 
     @FXML
     private TextField txtDato;
 
+    @FXML
+    private Label labelValueBin;
+
+    @FXML
+    private Label labelValueDec;
+
+    @FXML
+    private Label labelValueHex;
+
+    @FXML
+    private Label labelValueOctal;
+
+    @FXML
+    private VBox pasosContainer;
+
 
     // INYECCION DE DEPENDENCIAS
     Decimal calculadoraDecimal = new Decimal();
-    public static ObservableList<BinaryRow> binaryRows = FXCollections.observableArrayList();
-    public static ObservableList<OctalRow> octalRows = FXCollections.observableArrayList();
-//    public static ObservableList<HexadecimalRow> hexadecimalRows = FXCollections.observableArrayList();
 
 
     @FXML
-    void detectType(KeyEvent event) {
-        String texto = txtDato.getText();
-        labelBase.setText(CheckType.verificarTipoDato(texto));
-    }
+    void convertValue(ActionEvent event) {
+        pasosContainer.getChildren().clear();
+        calculadoraDecimal.valor.setLength(0);
+        if (!txtDato.getText().isEmpty()) {
+            if(boxBase.getSelectionModel().getSelectedItem().equals("10")){
+                if(boxConversion.getSelectionModel().getSelectedItem().equals("Binario")){
+                    ArrayList<Integer> resultadosBinaryList = new ArrayList<>();
+                    ArrayList<Double> resideoBinaryList = new ArrayList<>();
+                    ArrayList<Integer> divicionBinaryList = new ArrayList<>();
+                    ArrayList<String> pasosDecimalToBinary = new ArrayList<>();
+                    decimalToBinario(resultadosBinaryList, resideoBinaryList, divicionBinaryList, pasosDecimalToBinary);
 
+//                    Collections.reverse(pasosDecimalToBinary);
+                    for (String value : pasosDecimalToBinary) {
+                        Text paso = new Text(value);
+                        pasosContainer.getChildren().add(paso);
+                    }
+                } else if(boxConversion.getSelectionModel().getSelectedItem().equals("Octal")){
+                    
+                }
+            }
 
-    @FXML
-    void convertData(ActionEvent event) {
-        showDecimaltoBinary();
-        showDecimaltoOctal();
-    }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Mensaje");
+            alert.setHeaderText(null);
+            alert.setContentText("Ingresa un valor antes de continuar");
 
-    public void showDecimaltoBinary(){
-        String texto = txtDato.getText().trim();
-        int decimalNumber = Integer.parseInt(texto);
-
-        ArrayList<Integer> binaryResultadosList = new ArrayList<>();
-        ArrayList<Double> binaryResideosList = new ArrayList<>();
-        ArrayList<Integer> binaryDivisionesList = new ArrayList<>();
-
-
-        calculadoraDecimal.decimalToBinary(decimalNumber, binaryResultadosList, binaryResideosList, binaryDivisionesList);
-        Collections.reverse(binaryDivisionesList);
-        Collections.reverse(binaryResideosList);
-        Collections.reverse(binaryResultadosList);
-
-
-        for (int i = 0; i < binaryResultadosList.size(); i++) {
-            binaryRows.add(new BinaryRow(binaryResultadosList.get(i).toString(), binaryDivisionesList.get(i).toString(), binaryResideosList.get(i).toString()));
+            alert.showAndWait();
         }
-
-        tableBinary.setItems(binaryRows);
     }
 
-    public void showDecimaltoOctal(){
-        String texto = txtDato.getText().trim();
-        int decimalNumber = Integer.parseInt(texto);
+    private void decimalToBinario(ArrayList<Integer> resultadosBinaryList, ArrayList<Double> resideoBinaryList, ArrayList<Integer> divicionBinaryList, ArrayList<String> pasosBinarytoDecimal) {
 
-        ArrayList<Integer> octalResultadosList = new ArrayList<>();
-        ArrayList<Double> octalResideosList = new ArrayList<>();
-        ArrayList<Integer> octalDivisionesList = new ArrayList<>();
-        calculadoraDecimal.decimalToOctal(decimalNumber, octalResultadosList, octalResideosList, octalDivisionesList);
-
-        for (int i = 0; i < octalResultadosList.size(); i++) {
-            octalRows.add(new OctalRow(octalResultadosList.get(i).toString(), octalDivisionesList.get(i).toString(), octalResideosList.get(i).toString()));
+        calculadoraDecimal.decimalToBinary(Integer.parseInt(txtDato.getText()), resultadosBinaryList, resideoBinaryList, divicionBinaryList, pasosBinarytoDecimal);
+        StringBuilder stringBuilderBinary = new StringBuilder();
+        for (int value : resultadosBinaryList) {
+            stringBuilderBinary.append(value);
         }
+        labelValueBin.setText(stringBuilderBinary.toString());
 
-        tableOctal.setItems(octalRows);
+
+        ArrayList<Integer> resultadosOctalList = new ArrayList<>();
+        ArrayList<Double> resideoOctalList = new ArrayList<>();
+        ArrayList<Integer> divicionOctalList = new ArrayList<>();
+
+        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList, resideoOctalList, divicionOctalList, pasosBinarytoDecimal);
+        StringBuilder stringBuilderOctal = new StringBuilder();
+        for (int value : resultadosOctalList) {
+            stringBuilderOctal.append(value);
+        }
+        labelValueOctal.setText(stringBuilderOctal.toString());
 
 
+        ArrayList<String> resultadosHexList = new ArrayList<>();
+        ArrayList<Double> resideoHexList = new ArrayList<>();
+        ArrayList<Integer> divicionHexList = new ArrayList<>();
+
+        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList, resideoHexList, divicionHexList, pasosBinarytoDecimal);
+        StringBuilder stringBuilderHex = new StringBuilder();
+
+        Collections.reverse(resultadosHexList);
+        for (String value : resultadosHexList) {
+            stringBuilderHex.append(value);
+        }
+        labelValueHex.setText(stringBuilderHex.toString());
+        labelValueDec.setText(txtDato.getText());
     }
-
 
 
     public void loadBasesInComboBox(){
-        ObservableList observableListCarrera = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("8", "10", "2", "16")));
-        boxConversion.setItems(observableListCarrera);
+        ObservableList observableListBase = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("8", "10", "2", "16")));
+        ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Decimal", "Octal", "Hexadecimal")));
+        boxConversion.setItems(observableListConvertir);
+        boxBase.setItems(observableListBase);
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        columnaDivision.setCellValueFactory(new PropertyValueFactory<>("divisionValue"));
-        columnaResideo.setCellValueFactory(new PropertyValueFactory<>("resideoValue"));
-        columnResultado.setCellValueFactory(new PropertyValueFactory<>("binaryValue"));
-
-        columnaDivisionOctal.setCellValueFactory(new PropertyValueFactory<>("divisionValue"));
-        columnaResideoOctal.setCellValueFactory(new PropertyValueFactory<>("resideoValue"));
-        columnResultadoOctal.setCellValueFactory(new PropertyValueFactory<>("octalValue"));
-
 
         Thread hilo = new Thread(() -> {
             try {
