@@ -1,12 +1,18 @@
 package com.example.calculadoraconversion.controllers;
 
+import com.example.calculadoraconversion.App;
+import com.example.calculadoraconversion.calculadoras.Binario;
+import com.example.calculadoraconversion.calculadoras.Octal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -15,6 +21,7 @@ import com.example.calculadoraconversion.calculadoras.Decimal;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 
 public class CalculadoraController implements Initializable {
@@ -93,8 +100,49 @@ public class CalculadoraController implements Initializable {
                         Text paso = new Text(value);
                         pasosContainer.getChildren().add(paso);
                     }
+                } else if(boxConversion.getSelectionModel().getSelectedItem().equals("Hexadecimal")){
+                    ArrayList<String> pasosDecimalToHex = new ArrayList<>();
+                    decimalToHex(pasosDecimalToHex);
+
+                    for (String value : pasosDecimalToHex) {
+                        Text paso = new Text(value);
+                        pasosContainer.getChildren().add(paso);
+                    }
+                }
+            }else if(boxBase.getSelectionModel().getSelectedItem().equals("2")) {
+                if(boxConversion.getSelectionModel().getSelectedItem().equals("Hexadecimal")){
+                    ArrayList<String> pasos = Binario.conversionPasoAPaso(txtDato.getText());
+                    Text primerPaso = new Text("Dividir el binario en grupo de 4 de derecha a izquierda, donde \ncada grupo representa un numero hexadecimal\nsi hay grupos incompletos se agregaran ceros a la izquierda");
+                    primerPaso.setStyle("-fx-font-size: 18px;");
+                    pasosContainer.getChildren().add(primerPaso);
+                    try {
+                        FXMLLoader xdLoader = new FXMLLoader(App.class.getResource("binario.fxml"));
+                        Parent xdRoot = xdLoader.load();
+                        pasosContainer.getChildren().add(xdRoot);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    addStepsToContainerToBinarioTo(pasos);
+                }else if (boxConversion.getSelectionModel().getSelectedItem().equals("Octal")){
+                    ArrayList<String> pasos = Binario.conversionPasoAPasoOctal(txtDato.getText());
+                    Text primerPasoOctal = new Text("Dividir el binario en grupo de 3 de derecha a izquierda, donde \ncada grupo representa un numero Octal\nsi hay grupos incompletos se agregaran ceros a la izquierda");
+                    primerPasoOctal.setStyle("-fx-font-size: 18px;");
+                    pasosContainer.getChildren().add(primerPasoOctal);
+                    try {
+                        FXMLLoader xdLoader = new FXMLLoader(App.class.getResource("binario.fxml"));
+                        Parent xdRoot = xdLoader.load();
+                        pasosContainer.getChildren().add(xdRoot);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    addStepsToContainerToBinarioTo(pasos);
+                }else if (boxConversion.getSelectionModel().getSelectedItem().equals("Decimal")){
+                    ArrayList<String> pasos = Binario.conversionPasoAPasoDec(txtDato.getText());
+
+                    addStepsToContainerToBinarioTo(pasos);
                 }
             }
+
 
         }else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -104,6 +152,52 @@ public class CalculadoraController implements Initializable {
 
             alert.showAndWait();
         }
+    }
+
+    private void addStepsToContainerToBinarioTo(ArrayList<String> pasos) {
+        for (String value : pasos) {
+            Text paso = new Text(value);
+            paso.setStyle("-fx-font-size: 18px;");
+            pasosContainer.getChildren().add(paso);
+        }
+        labelValueBin.setText(txtDato.getText());
+        labelValueHex.setText(Integer.toHexString(Integer.parseInt(txtDato.getText(), 2)).toUpperCase());
+        labelValueDec.setText(Integer.toString(Integer.parseInt(txtDato.getText(), 2)));
+        labelValueOctal.setText(Integer.toOctalString(Integer.parseInt(txtDato.getText(), 2)));
+    }
+
+    private void decimalToHex(ArrayList<String> pasosDecimalToHex) {
+
+        ArrayList<String> resultadosHexList = new ArrayList<>();
+        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList,  pasosDecimalToHex);
+        StringBuilder stringBuilderHex = new StringBuilder();
+        for (String value : resultadosHexList) {
+            stringBuilderHex.append(value);
+        }
+        labelValueHex.setText(stringBuilderHex.reverse().toString());
+
+        ArrayList<String> pasosDecimalToOctal = new ArrayList<>();
+        ArrayList<Integer> resultadosOctalList = new ArrayList<>();
+        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList, pasosDecimalToOctal);
+        StringBuilder stringBuilderOctal = new StringBuilder();
+        for (int value : resultadosOctalList) {
+            stringBuilderOctal.append(value);
+        }
+        labelValueOctal.setText(stringBuilderOctal.toString());
+
+
+        ArrayList<String> pasosDecimalToBinary = new ArrayList<>();
+        ArrayList<Integer> resultadosBinaryList = new ArrayList<>();
+        calculadoraDecimal.decimalToBinary(Integer.parseInt(txtDato.getText()), resultadosBinaryList, pasosDecimalToBinary);
+        StringBuilder stringBuilderBinary = new StringBuilder();
+        for (int value : resultadosBinaryList) {
+            stringBuilderBinary.append(value);
+        }
+        labelValueBin.setText(stringBuilderBinary.reverse().toString());
+
+
+
+        labelValueDec.setText(txtDato.getText());
     }
 
     private void decimalToOctal(ArrayList<String> pasosDecimalToOctal) {
@@ -150,9 +244,8 @@ public class CalculadoraController implements Initializable {
         labelValueBin.setText(stringBuilderBinary.reverse().toString());
 
 
-        ArrayList<String> pasosOctaltoDecimal = new ArrayList<>();
         ArrayList<Integer> resultadosOctalList = new ArrayList<>();
-        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList, pasosOctaltoDecimal);
+        calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), resultadosOctalList);
         StringBuilder stringBuilderOctal = new StringBuilder();
         for (int value : resultadosOctalList) {
             stringBuilderOctal.append(value);
@@ -160,9 +253,8 @@ public class CalculadoraController implements Initializable {
         labelValueOctal.setText(stringBuilderOctal.toString());
 
 
-        ArrayList<String> pasosHextoDecimal = new ArrayList<>();
         ArrayList<String> resultadosHexList = new ArrayList<>();
-        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList,  pasosHextoDecimal);
+        calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()), resultadosHexList);
         StringBuilder stringBuilderHex = new StringBuilder();
         for (String value : resultadosHexList) {
             stringBuilderHex.append(value);

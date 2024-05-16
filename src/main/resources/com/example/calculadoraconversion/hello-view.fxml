@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="794.0" style="-fx-background-color: #393939;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calculadoraconversion.controllers.CalculadoraController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="1052.0" style="-fx-background-color: #393939;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calculadoraconversion.controllers.CalculadoraController">
    <children>
       <TextField fx:id="txtDato" layoutX="32.0" layoutY="45.0" prefHeight="44.0" prefWidth="432.0" />
-      <ComboBox fx:id="boxConversion" layoutX="499.0" layoutY="140.0" onAction="#convertValue" prefHeight="44.0" prefWidth="260.0" promptText="Selecciona" />
+      <ComboBox fx:id="boxConversion" layoutX="772.0" layoutY="45.0" onAction="#convertValue" prefHeight="44.0" prefWidth="260.0" promptText="Selecciona" />
       <ComboBox fx:id="boxBase" layoutX="499.0" layoutY="45.0" onAction="#baseAction" prefHeight="44.0" prefWidth="260.0" promptText="Selecciona" />
       <Label layoutX="32.0" layoutY="14.0" text="Dato" textFill="WHITE">
          <font>
@@ -24,12 +24,12 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="499.0" layoutY="109.0" text="Conversion" textFill="WHITE">
+      <Label layoutX="772.0" layoutY="14.0" text="Conversion" textFill="WHITE">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER_LEFT" layoutX="499.0" layoutY="213.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
+      <VBox alignment="CENTER_LEFT" layoutX="772.0" layoutY="160.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
          <children>
             <Label alignment="CENTER" text="Octal" textFill="WHITE">
                <font>
@@ -46,7 +46,7 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <VBox alignment="CENTER_LEFT" layoutX="499.0" layoutY="303.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
+      <VBox alignment="CENTER_LEFT" layoutX="772.0" layoutY="250.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
          <children>
             <Label alignment="CENTER" text="Hex" textFill="WHITE">
                <font>
@@ -63,7 +63,7 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <VBox alignment="CENTER_LEFT" layoutX="499.0" layoutY="393.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
+      <VBox alignment="CENTER_LEFT" layoutX="772.0" layoutY="340.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
          <children>
             <Label alignment="CENTER" text="Dec" textFill="WHITE">
                <font>
@@ -80,7 +80,7 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <VBox alignment="CENTER_LEFT" layoutX="499.0" layoutY="481.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
+      <VBox alignment="CENTER_LEFT" layoutX="772.0" layoutY="428.0" prefHeight="65.0" prefWidth="260.0" style="-fx-border-color: #FFFFFF;">
          <children>
             <Label alignment="CENTER" text="Bin" textFill="WHITE">
                <font>
@@ -97,9 +97,12 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <ScrollPane layoutX="32.0" layoutY="104.0" prefHeight="518.0" prefWidth="432.0">
+      <ScrollPane layoutX="32.0" layoutY="104.0" prefHeight="518.0" prefWidth="728.0">
          <content>
-            <VBox fx:id="pasosContainer" prefHeight="200.0" prefWidth="402.0" spacing="10.0" />
+            <VBox fx:id="pasosContainer" prefHeight="200.0" prefWidth="402.0" spacing="10.0">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></VBox>
          </content>
       </ScrollPane>
    </children>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="551.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="600.0" spacing="2.0">
+         <children>
+      <Label style="-fx-border-color: #000000;" text="0 = '0000'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="1 = '0001'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="2 = '0010'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="3 = '0011'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="4 = '0100'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="5 = '0101'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="6 = '0110'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label style="-fx-border-color: #000000;" text="7 = '0111'">
+         <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="600.0" spacing="2.0">
+         <children>
+            <Label style="-fx-border-color: #000000;" text="8 = '1000'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="9 = '1001'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="A = '1010'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="B = '1011'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="C = '1100'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="D = '1101'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="E = '1110'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label style="-fx-border-color: #000000;" text="F = '1111'">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets left="5.0" />
+   </padding>
+</VBox>
