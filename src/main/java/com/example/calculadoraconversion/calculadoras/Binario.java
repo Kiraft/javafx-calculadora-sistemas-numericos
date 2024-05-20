@@ -38,6 +38,8 @@ public class Binario {
         return pasos;
     }
 
+
+
     // Método para convertir un número binario a octal
     public static String binarioAOctal(String binario) {
         return Integer.toOctalString(Integer.parseInt(binario, 2));
@@ -69,6 +71,8 @@ public class Binario {
         pasos.add("El numero binario " + binario + " se convierte a octal: " + binarioAOctal(binario));
         return pasos;
     }
+
+
 
     // Método para convertir un número binario a decimal
     public static int binarioADecimal(String binario) {

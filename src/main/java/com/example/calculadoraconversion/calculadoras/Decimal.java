@@ -5,10 +5,9 @@ import java.util.ArrayList;
 public class Decimal {
     public StringBuilder valor = new StringBuilder();
 
-    public void decimalToBinary(int decimalNumber, ArrayList<Integer> binaryList, ArrayList<String> pasosDecimalToBinary) {
+    public void decimalToBinary(int decimalNumber, ArrayList<String> pasosDecimalToBinary) {
         if (decimalNumber == 0) {
 
-            binaryList.add(0);
             valor.append(0);
 
             pasosDecimalToBinary.add("Dividimos " + decimalNumber + "/2 \nSi nuestro resultado no es un numero " +
@@ -17,7 +16,6 @@ public class Decimal {
         } else if (decimalNumber == 1) {
             double resideo = (double) decimalNumber / 2;
 
-            binaryList.add(1);
             valor.append(1);
 
             pasosDecimalToBinary.add("Dividimos " + decimalNumber + "/2 \nSi nuestro resultado no es un numero " +
@@ -29,44 +27,20 @@ public class Decimal {
             double resideo = (double) decimalNumber / 2;
 
             valor.append(remainder);
-            binaryList.add(remainder);
 
 
             pasosDecimalToBinary.add("Dividimos " + decimalNumber + "/2 \nSi nuestro resultado no es un numero " +
                     "entero agregamos un uno \nen otro caso sera cero \nen esta caso tenemos " + resideo + " por ende tenemos " + remainder + "\nStack de valores: " + valor.toString());
 
-            decimalToBinary(quotient, binaryList, pasosDecimalToBinary);
+            decimalToBinary(quotient, pasosDecimalToBinary);
 
         }
     }
 
-    public void decimalToBinary(int decimalNumber, ArrayList<Integer> binaryList) {
+
+    public void decimalToOctal(int decimalNumber, ArrayList<String> pasosDecimalToOctal ) {
         if (decimalNumber == 0) {
 
-            binaryList.add(0);
-            valor.append(0);
-
-        } else if (decimalNumber == 1) {
-            double resideo = (double) decimalNumber / 2;
-
-            binaryList.add(1);
-            valor.append(1);
-
-        } else {
-            int remainder = decimalNumber % 2;
-            int quotient = decimalNumber / 2;
-            double resideo = (double) decimalNumber / 2;
-
-            valor.append(remainder);
-            binaryList.add(remainder);
-
-        }
-    }
-
-    public void decimalToOctal(int decimalNumber, ArrayList<Integer> octalList, ArrayList<String> pasosDecimalToOctal ) {
-        if (decimalNumber == 0) {
-
-            octalList.add(0);
             valor.append(0);
             pasosDecimalToOctal.add("El número decimal es 0, por lo tanto, el octal también es 0.");
         } else {
@@ -74,7 +48,6 @@ public class Decimal {
                 int remainder = decimalNumber % 8;
                 int quotient = decimalNumber / 8;
 
-                octalList.add(remainder);
                 valor.append(remainder);
 
                 double resideo = (double) decimalNumber / 8;
@@ -85,29 +58,9 @@ public class Decimal {
         }
     }
 
-    public void decimalToOctal(int decimalNumber, ArrayList<Integer> octalList) {
+
+    public void decimalToHexadecimal(int decimalNumber, ArrayList<String> pasosDecimalToHex) {
         if (decimalNumber == 0) {
-
-            octalList.add(0);
-            valor.append(0);
-        } else {
-            while (decimalNumber != 0) {
-                int remainder = decimalNumber % 8;
-                int quotient = decimalNumber / 8;
-
-                octalList.add(remainder);
-                valor.append(remainder);
-
-                double resideo = (double) decimalNumber / 8;
-
-                decimalNumber = quotient;
-            }
-        }
-    }
-
-    public void decimalToHexadecimal(int decimalNumber, ArrayList<String> hexadecimalList, ArrayList<String> pasosDecimalToHex) {
-        if (decimalNumber == 0) {
-            hexadecimalList.add("0");
             pasosDecimalToHex.add("El número decimal es 0, por lo tanto, el hexadecimal también es 0.");
         } else {
             while (decimalNumber != 0) {
@@ -118,7 +71,6 @@ public class Decimal {
                 // Convertir los valores mayores a 9 a caracteres hexadecimales
                 String hexChar = (remainder < 10) ? String.valueOf(remainder) : Character.toString((char) ('A' + remainder - 10));
 
-                hexadecimalList.add(hexChar);
 
                 // Agregar los pasos explicativos a pasosDecimalToHex
                 String paso = "Dividimos " + decimalNumber + " entre 16.\nSi el resultado no es un número entero, agregamos el residuo.\nEn este caso, " + resideo + " es el resultado, por lo que el residuo es ";
@@ -134,28 +86,4 @@ public class Decimal {
         }
     }
 
-    public void decimalToHexadecimal(int decimalNumber, ArrayList<String> hexadecimalList) {
-        if (decimalNumber == 0) {
-            hexadecimalList.add("0");
-        } else {
-            while (decimalNumber != 0) {
-                int remainder = decimalNumber % 16;
-                int quotient = decimalNumber / 16;
-                double resideo = (double) decimalNumber / 16;
-
-                String hexChar = (remainder < 10) ? String.valueOf(remainder) : Character.toString((char) ('A' + remainder - 10));
-
-                hexadecimalList.add(hexChar);
-
-                String paso = "Dividimos " + decimalNumber + " entre 16.\nSi el resultado no es un número entero, agregamos el residuo.\nEn este caso, " + resideo + " es el resultado, por lo que el residuo es ";
-                if (remainder < 10) {
-                    paso += remainder + ".\n";
-                } else {
-                    paso += "'" + hexChar + "'.\n";
-                }
-
-                decimalNumber = quotient;
-            }
-        }
-    }
 }
