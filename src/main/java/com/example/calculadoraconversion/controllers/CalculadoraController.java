@@ -28,13 +28,19 @@ import javafx.util.Pair;
 public class CalculadoraController implements Initializable {
 
     @FXML
-    private ComboBox<?> boxConversion;
+    private RadioButton dieciseis;
 
     @FXML
-    private ComboBox<?> boxBase;
+    private RadioButton diez;
 
     @FXML
-    private TextField txtDato;
+    private RadioButton dos;
+
+    @FXML
+    private ToggleGroup group1;
+
+    @FXML
+    private ToggleGroup group2;
 
     @FXML
     private Label labelValueBin;
@@ -49,41 +55,69 @@ public class CalculadoraController implements Initializable {
     private Label labelValueOctal;
 
     @FXML
+    private RadioButton ocho;
+
+    @FXML
     private VBox pasosContainer;
 
+    @FXML
+    private RadioButton radioBinario;
+
+    @FXML
+    private RadioButton radioDecimal;
+
+    @FXML
+    private RadioButton radioHexadecimal;
+
+    @FXML
+    private RadioButton radioOctal;
+
+    @FXML
+    private TextField txtDato;
 
     // INYECCION DE DEPENDENCIAS
     Decimal calculadoraDecimal = new Decimal();
 
+
     @FXML
-    void baseAction(ActionEvent event) {
-        if(boxBase.getSelectionModel().getSelectedItem().equals("10")){
-            boxConversion.getItems().clear();
-            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Octal", "Hexadecimal")));
-            boxConversion.setItems(observableListConvertir);
-        }else if (boxBase.getSelectionModel().getSelectedItem().equals("8")){
-            boxConversion.getItems().clear();
-            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Decimal", "Hexadecimal")));
-            boxConversion.setItems(observableListConvertir);
-        }else if (boxBase.getSelectionModel().getSelectedItem().equals("16")){
-            boxConversion.getItems().clear();
-            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Octal", "Decimal")));
-            boxConversion.setItems(observableListConvertir);
-        }else if (boxBase.getSelectionModel().getSelectedItem().equals("2")){
-            boxConversion.getItems().clear();
-            ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Decimal", "Octal", "Hexadecimal")));
-            boxConversion.setItems(observableListConvertir);
-        }
+    void diesicesDisable(ActionEvent event) {
+        radioDisables();
+        radioHexadecimal.setDisable(true);
     }
 
+    @FXML
+    void diezDisable(ActionEvent event) {
+        radioDisables();
+        radioDecimal.setDisable(true);
+    }
 
     @FXML
-    void convertValue(ActionEvent event) {
+    void dosDisable(ActionEvent event) {
+        radioDisables();
+        radioBinario.setDisable(true);
+    }
+
+    @FXML
+    void ochoDisable(ActionEvent event) {
+        radioDisables();
+
+        radioOctal.setDisable(true);
+    }
+
+    private void radioDisables() {
+        radioBinario.setDisable(false);
+        radioHexadecimal.setDisable(false);
+        radioDecimal.setDisable(false);
+        radioOctal.setDisable(false);
+    }
+
+    @FXML
+    void toConvert(ActionEvent event) {
         pasosContainer.getChildren().clear();
         calculadoraDecimal.valor.setLength(0);
         if (!txtDato.getText().isEmpty()) {
-            if(boxBase.getSelectionModel().getSelectedItem().equals("10")){
-                if(boxConversion.getSelectionModel().getSelectedItem().equals("Binario")){
+            if(diez.isSelected()){
+                if(radioBinario.isSelected()){
 
                     ArrayList<String> pasosDecimalToBinary = new ArrayList<>();
                     calculadoraDecimal.decimalToBinary(Integer.parseInt(txtDato.getText()), pasosDecimalToBinary);
@@ -93,7 +127,7 @@ public class CalculadoraController implements Initializable {
                     }
                     addStepsToContainerToDecTo();
 
-                } else if(boxConversion.getSelectionModel().getSelectedItem().equals("Octal")){
+                } else if(radioOctal.isSelected()){
                     ArrayList<String> pasosDecimalToOctal = new ArrayList<>();
                     calculadoraDecimal.decimalToOctal(Integer.parseInt(txtDato.getText()), pasosDecimalToOctal);
 
@@ -105,7 +139,7 @@ public class CalculadoraController implements Initializable {
                     Text ultimoPaso = new Text("Paso Final: Le damos la vuelta al numero Octal: " +  Integer.toOctalString(Integer.parseInt(txtDato.getText())));
                     ultimoPaso.setStyle("-fx-font-size: 18px;");
                     pasosContainer.getChildren().add(ultimoPaso);
-                } else if(boxConversion.getSelectionModel().getSelectedItem().equals("Hexadecimal")){
+                } else if(radioHexadecimal.isSelected()){
                     ArrayList<String> pasosDecimalToHex = new ArrayList<>();
                     calculadoraDecimal.decimalToHexadecimal(Integer.parseInt(txtDato.getText()),  pasosDecimalToHex);
 
@@ -118,8 +152,8 @@ public class CalculadoraController implements Initializable {
                     ultimoPaso.setStyle("-fx-font-size: 18px;");
                     pasosContainer.getChildren().add(ultimoPaso);
                 }
-            }else if(boxBase.getSelectionModel().getSelectedItem().equals("2")) {
-                if(boxConversion.getSelectionModel().getSelectedItem().equals("Hexadecimal")){
+            }else if(dos.isSelected()) {
+                if(radioHexadecimal.isSelected()){
                     ArrayList<String> pasos = Binario.conversionPasoAPaso(txtDato.getText());
                     Text primerPaso = new Text("Dividir el binario en grupo de 4 de derecha a izquierda, donde \ncada grupo representa un numero hexadecimal\nsi hay grupos incompletos se agregaran ceros a la izquierda");
                     primerPaso.setStyle("-fx-font-size: 18px;");
@@ -132,7 +166,7 @@ public class CalculadoraController implements Initializable {
                         throw new RuntimeException(e);
                     }
                     addStepsToContainerToBinarioTo(pasos);
-                }else if (boxConversion.getSelectionModel().getSelectedItem().equals("Octal")){
+                }else if (radioOctal.isSelected()){
                     ArrayList<String> pasos = Binario.conversionPasoAPasoOctal(txtDato.getText());
                     Text primerPasoOctal = new Text("Dividir el binario en grupo de 3 de derecha a izquierda, donde \ncada grupo representa un numero Octal\nsi hay grupos incompletos se agregaran ceros a la izquierda");
                     primerPasoOctal.setStyle("-fx-font-size: 18px;");
@@ -145,13 +179,13 @@ public class CalculadoraController implements Initializable {
                         throw new RuntimeException(e);
                     }
                     addStepsToContainerToBinarioTo(pasos);
-                }else if (boxConversion.getSelectionModel().getSelectedItem().equals("Decimal")){
+                }else if (radioDecimal.isSelected()){
                     ArrayList<String> pasos = Binario.conversionPasoAPasoDec(txtDato.getText());
 
                     addStepsToContainerToBinarioTo(pasos);
                 }
-            }else if (boxBase.getSelectionModel().getSelectedItem().equals("16")){
-                if(boxConversion.getSelectionModel().getSelectedItem().equals("Decimal")){
+            }else if (dieciseis.isSelected()){
+                if(radioDecimal.isSelected()){
                     ArrayList<String> pasos = Hexadecimal.conversionPasoAPaso(txtDato.getText());
                     Text primerPaso = new Text("Primero por cada digito Hexadecimal vamos a multiplicarlo por 16 con un exponente \ndonde se sumara 1 por cada digito hexadecimnal\nUsando una tabla como pivote para Hexadecimal a Decimal para las sumas");
                     primerPaso.setStyle("-fx-font-size: 18px;");
@@ -167,7 +201,7 @@ public class CalculadoraController implements Initializable {
 
                     addStepsToContainerToHexTo(pasos);
 
-                }else if(boxConversion.getSelectionModel().getSelectedItem().equals("Binario")){
+                }else if(radioBinario.isSelected()){
                     ArrayList<String> pasos = Hexadecimal.conversionPasoAPasoHexToBin(txtDato.getText());
                     Text primerPaso = new Text("Primero vamos a obtener nuestra tabla de conversion de Hexadecimal a Binario que usaremos como pivote");
                     primerPaso.setStyle("-fx-font-size: 18px;");
@@ -186,7 +220,7 @@ public class CalculadoraController implements Initializable {
                     ultimoPaso.setStyle("-fx-font-size: 18px;");
                     pasosContainer.getChildren().add(ultimoPaso);
 
-                }else if(boxConversion.getSelectionModel().getSelectedItem().equals("Octal")){
+                }else if(radioOctal.isSelected()){
                     ArrayList<String> pasos = Hexadecimal.conversionPasoAPasoHexToOctal(txtDato.getText());
                     Text primerPaso = new Text("Primero vamos a obtener nuestra tabla de conversion de Hexadecimal a Binario que usaremos como pivote \nAl igual que Binario a Octal");
                     primerPaso.setStyle("-fx-font-size: 18px;");
@@ -206,12 +240,12 @@ public class CalculadoraController implements Initializable {
 
 
                 }
-            }else if (boxBase.getSelectionModel().getSelectedItem().equals("8")){
-                if(boxConversion.getSelectionModel().getSelectedItem().equals("Decimal")){
+            }else if (ocho.isSelected()){
+                if(radioDecimal.isSelected()){
                     ArrayList<String> pasos = Octal.conversionPasoAPasoOctalDec(txtDato.getText());
 
                     addStepsToContainerToOctalTo(pasos);
-                }else if (boxConversion.getSelectionModel().getSelectedItem().equals("Hexadecimal")){
+                }else if (radioHexadecimal.isSelected()){
                     ArrayList<String> pasos = Octal.conversionPasoAPasoOctaltoHex(txtDato.getText());
                     Text primerPaso = new Text("Primero vamos a obtener nuestra tabla de conversion de Octal a Binario que usaremos como pivote \nAl igual que Binario a Hexadecimal");
                     primerPaso.setStyle("-fx-font-size: 18px;");
@@ -228,7 +262,7 @@ public class CalculadoraController implements Initializable {
                         throw new RuntimeException(e);
                     }
                     addStepsToContainerToOctalTo(pasos);
-                }else if (boxConversion.getSelectionModel().getSelectedItem().equals("Binario")){
+                }else if (radioBinario.isSelected()){
                     ArrayList<String> pasos = Octal.conversionPasoAPaso(txtDato.getText());
                     Text primerPaso = new Text("Primero vamos a obtener nuestra tabla de conversion de Binario a Octal que usaremos como pivote");
                     primerPaso.setStyle("-fx-font-size: 18px;");
@@ -308,8 +342,7 @@ public class CalculadoraController implements Initializable {
     public void loadBasesInComboBox(){
         ObservableList observableListBase = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("8", "10", "2", "16")));
         ObservableList observableListConvertir = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList("Binario", "Decimal", "Octal", "Hexadecimal")));
-        boxConversion.setItems(observableListConvertir);
-        boxBase.setItems(observableListBase);
+
     }
 
 
